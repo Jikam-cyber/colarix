@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Scolarix | Espace Enseignant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        .navbar-custom { background-color: #003366; }
+        .table-hover tbody tr:hover { background-color: #f1f8ff; transition: 0.3s; }
+        .card-table { border-radius: 15px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="bi bi-person-badge-fill me-2"></i>SCOLARIX UNIVERSITY
+            </a>
+            <div class="ms-auto">
+                <a href="/logout" class="btn btn-outline-light btn-sm" onclick="return confirm('Voulez-vous revenir à l\'accueil ?')">
+                    <i class="bi bi-box-arrow-right"></i> Déconnexion
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold text-dark">Liste des Étudiants</h2>
+            <span class="badge bg-primary fs-6" th:text="${etudiants.size() + ' Étudiants inscrits'}"></span>
+        </div>
+
+        <div class="card card-table border-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th class="ps-4">Matricule</th>
+                            <th>Nom & Prénom</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="e : ${etudiants}">
+                            <td class="ps-4 fw-bold text-primary" th:text="${e.matricule}"></td>
+                            <td th:text="${e.nom + ' ' + e.prenom}"></td>
+                            <td class="text-center">
+                                <a th:href="@{/ajouter-note/{id}(id=${e.id})}" class="btn btn-sm btn-success me-2">
+                                    <i class="bi bi-plus-circle"></i> Saisir Note
+                                </a>
+                                <a th:href="@{/bulletin/{id}(id=${e.id})}" class="btn btn-sm btn-info text-white">
+                                    <i class="bi bi-file-earmark-text"></i> Bulletin
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
